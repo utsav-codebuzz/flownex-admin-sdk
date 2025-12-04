@@ -1,29 +1,45 @@
 import { useState } from "react";
 import { FlownexAdminSDK } from "../utils/sdk";
 
-export default function AddUser({ baseURL, token }) {
-    const [form, setForm] = useState({ name: "", email: "", phone: "" });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+export interface AddUserProps {
+    baseURL: string;
+    token?: string;
+}
 
-    const update = (k, v) => setForm({ ...form, [k]: v });
+export interface UserForm {
+    name: string;
+    email: string;
+    phone: string;
+}
+
+export default function AddUser({ baseURL }: AddUserProps) {
+    const [form, setForm] = useState<UserForm>({ name: "", email: "", phone: "" });
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
+    const [success, setSuccess] = useState<string>("");
+
+    const update = (k: keyof UserForm, v: string) =>
+        setForm((prev) => ({ ...prev, [k]: v }));
 
     const handleSubmit = async () => {
         setError("");
         setSuccess("");
+
         if (!form.name || !form.email || !form.phone) {
             setError("All fields are required");
             return;
         }
+
         setLoading(true);
+
         try {
-            const sdk = new FlownexAdminSDK({ baseURL, token });
+            const sdk = new FlownexAdminSDK({ baseURL, storage: localStorage });
             const res = await sdk.addUser(form);
+
             console.log("User created:", res);
             setSuccess("User created successfully!");
             setForm({ name: "", email: "", phone: "" });
-        } catch (err) {
+        } catch (err: any) {
             setError(err?.message || "Failed to create user");
         } finally {
             setLoading(false);
@@ -46,11 +62,9 @@ export default function AddUser({ baseURL, token }) {
                 </div>
             )}
 
-            {["name", "email", "phone"].map((field) => (
+            {(["name", "email", "phone"] as Array<keyof UserForm>).map((field) => (
                 <div key={field} className="mb-4">
-                    <label className="block text-sm font-medium mb-1 capitalize">
-                        {field}
-                    </label>
+                    <label className="block text-sm font-medium mb-1 capitalize">{field}</label>
                     <input
                         className="border dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-3 w-full rounded-lg focus:ring-2 focus:ring-blue-500 dark:text-white"
                         placeholder={`Enter ${field}`}
@@ -62,11 +76,10 @@ export default function AddUser({ baseURL, token }) {
 
             <button
                 className={`w-full p-3 rounded-lg text-white font-semibold transition flex items-center justify-center gap-2
-${loading ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"}`}
+        ${loading ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"}`}
                 onClick={handleSubmit}
                 disabled={loading}
             >
-                {loading && <span className="loader"></span>}
                 {loading ? "Adding..." : "Add User"}
             </button>
         </div>
