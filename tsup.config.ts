@@ -1,13 +1,14 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: ["src/index.js"],
   format: ["esm", "cjs"],
   dts: true,
   clean: true,
   minify: true,
   sourcemap: false,
-  splitting: false,
-  treeshake: true,
-  target: "es2020",
+  loader: {
+    ".jsx": "jsx",
+    ".js": "jsx",
+  },
 });

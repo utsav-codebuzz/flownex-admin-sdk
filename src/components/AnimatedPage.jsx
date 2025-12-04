@@ -1,11 +1,10 @@
-import { ReactNode } from "react";
-import { motion, cubicBezier } from "framer-motion";
+import { motion } from "framer-motion";
 
 const pageVariants = {
     initial: {
         opacity: 0,
         y: 20,
-        scale: 0.98,
+        scale: 0.98
     },
     animate: {
         opacity: 1,
@@ -13,8 +12,8 @@ const pageVariants = {
         scale: 1,
         transition: {
             duration: 0.45,
-            ease: cubicBezier(0.22, 1, 0.36, 1),
-        },
+            ease: [0.22, 1, 0.36, 1],
+        }
     },
     exit: {
         opacity: 0,
@@ -22,16 +21,12 @@ const pageVariants = {
         scale: 0.98,
         transition: {
             duration: 0.35,
-            ease: cubicBezier(0.22, 1, 0.36, 1),
-        },
-    },
+            ease: [0.22, 1, 0.36, 1],
+        }
+    }
 };
 
-export interface AnimatedPageProps {
-    children: ReactNode;
-}
-
-export default function AnimatedPage({ children }: AnimatedPageProps) {
+export default function AnimatedPage({ children }) {
     return (
         <motion.div
             variants={pageVariants}
