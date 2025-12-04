@@ -1,6 +1,6 @@
 {
   "name": "flownex-admin-sdk",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "A JavaScript SDK for Flownex admin integration.",
   "keywords": [
     "flownex",
