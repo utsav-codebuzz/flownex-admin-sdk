@@ -11,6 +11,14 @@
     "typescript"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/utsav-codebuzz/flownex-admin-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/utsav-codebuzz/flownex-admin-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/utsav-codebuzz/flownex-admin-sdk/issues"
+  },
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
