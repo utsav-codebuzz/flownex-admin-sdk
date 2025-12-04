@@ -1,0 +1,55 @@
+{
+  "name": "flownex-admin-sdk",
+  "version": "1.0.5",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./dist/index.css": "./dist/index.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "dist/index.css"
+  ],
+  "scripts": {
+    "build": "tsup src/lib/index.js --format esm,cjs --clean && npm run copy",
+    "copy": "npx cpx2 \"src/components/**/*\" dist/components && npx cpx2 src/index.css dist/",
+    "dev": "vite",
+    "preview": "vite preview",
+    "publish-sdk": "npm run build && npm publish"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0 <21.0.0",
+    "react-dom": ">=18.0.0 <21.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "framer-motion": "^12.23.24",
+    "lucide-react": "^0.555.0",
+    "react-router-dom": "^7.9.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "autoprefixer": "^10.4.22",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.18",
+    "tsup": "^8.0.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.4",
+    "cpx2": "^3.0.0"
+  }
+}
