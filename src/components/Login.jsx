@@ -1,36 +1,26 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { FlownexAdminSDK } from "../utils/sdk";
 
-export interface LoginProps {
-    baseURL: string;
-    onLogin?: (response: { token: string; user: any }) => void;
-}
-
-export default function Login({ baseURL, onLogin }: LoginProps) {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string>("");
+export default function Login({ baseURL, onLogin }) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     const handleLogin = async () => {
         setError("");
-
         if (!email || !password) {
             setError("Email and password are required.");
             return;
         }
-
         setLoading(true);
         try {
-            const sdk = new FlownexAdminSDK({ baseURL, storage: localStorage });
+            const sdk = new FlownexAdminSDK({ baseURL });
             const res = await sdk.loginAdmin({ email, password });
-
-            if (onLogin && res.token) {
-                onLogin({ token: res.token, user: res.user });
-            }
-        } catch (err: any) {
+            if (onLogin) onLogin(res);
+        } catch (err) {
             setError(err?.message || "Login failed");
         } finally {
             setLoading(false);
@@ -41,7 +31,11 @@ export default function Login({ baseURL, onLogin }: LoginProps) {
         <div className="max-w-md mx-auto p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border dark:border-gray-700">
             <h2 className="text-2xl font-bold text-center mb-6 tracking-tight">Sub Admin Login</h2>
 
-            {error && <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-700 border border-red-300">{error}</div>}
+            {error && (
+                <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-700 border border-red-300">
+                    {error}
+                </div>
+            )}
 
             <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">Email</label>

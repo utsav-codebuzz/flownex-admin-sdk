@@ -1,16 +1,11 @@
 import { useState } from "react";
 import { FlownexAdminSDK } from "../utils/sdk";
 
-export interface AddCaseTypeProps {
-    baseURL: string;
-    token?: string;
-}
-
-export default function AddCaseType({ baseURL }: AddCaseTypeProps) {
-    const [name, setName] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string>("");
-    const [success, setSuccess] = useState<string>("");
+export default function AddCaseType({ baseURL, token }) {
+    const [name, setName] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     const handleSubmit = async () => {
         setError("");
@@ -22,15 +17,13 @@ export default function AddCaseType({ baseURL }: AddCaseTypeProps) {
         }
 
         setLoading(true);
-
         try {
-            const sdk = new FlownexAdminSDK({ baseURL, storage: localStorage });
+            const sdk = new FlownexAdminSDK({ baseURL, token });
             const res = await sdk.addCaseType({ name });
-
             console.log("Case Type Added:", res);
             setSuccess("Case type added successfully!");
             setName("");
-        } catch (err: any) {
+        } catch (err) {
             setError(err?.message || "Failed to add case type");
         } finally {
             setLoading(false);
@@ -65,10 +58,11 @@ export default function AddCaseType({ baseURL }: AddCaseTypeProps) {
 
             <button
                 className={`w-full p-3 rounded-lg text-white font-semibold transition flex items-center justify-center gap-2
-         ${loading ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-700"}`}
+${loading ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-700"}`}
                 onClick={handleSubmit}
                 disabled={loading}
             >
+                {loading && <span className="loader"></span>}
                 {loading ? "Adding..." : "Add Case Type"}
             </button>
         </div>
