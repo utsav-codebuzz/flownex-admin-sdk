@@ -5,7 +5,9 @@ import App from "./App";
 import { AnimatePresence } from "framer-motion";
 import "./index.css";
 
-createRoot(document.getElementById("root")).render(
+const rootElement = document.getElementById("root") as HTMLElement;
+
+createRoot(rootElement).render(
   <StrictMode>
     <BrowserRouter>
       <AnimatePresence mode="wait">

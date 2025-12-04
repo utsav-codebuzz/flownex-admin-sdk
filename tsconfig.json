@@ -3,20 +3,24 @@
         "target": "ES2020",
         "module": "ESNext",
         "jsx": "react-jsx",
-        "moduleResolution": "bundler",
+        "moduleResolution": "node",
+        "declaration": true,
+        "outDir": "dist",
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
         "skipLibCheck": true,
-        "allowJs": true,
         "forceConsistentCasingInFileNames": true,
-        "noEmit": true
+        "strict": true,
+        "allowSyntheticDefaultImports": true
     },
     "include": [
         "src"
     ],
     "exclude": [
         "dist",
-        "node_modules"
+        "node_modules",
+        "example",
+        "build"
     ]
 }
